@@ -7,19 +7,9 @@ require('dotenv').config();
 const app = express();
 
 // Node Server
-const server = require('http').createServer();
-const io = require('socket.io')(server);
-
-// Mensajes de sockets
-io.on('connection', client => {
-    console.log('Cliente conectado');
-
-    client.on('disconnect', () => { 
-        console.log('Cliente desconectado')
-     });
-}
-
-);
+const server = require('http').createServer(app);
+module.exports.io = require('socket.io')(server);
+require('./sockets/socket')
 
 // app.get('/', (req,res) => {
 //     res.send('Hello World')
@@ -31,10 +21,7 @@ app.use( express.static (publicPath) );
 
 
 
-
-
-
-app.listen( process.env.PORT, ( err ) => {
+server.listen( process.env.PORT, ( err ) => {
     
     if ( err ) throw new Error(err);
 
