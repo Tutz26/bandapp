@@ -1,11 +1,34 @@
+import 'package:bandnames/services/socket_service.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class StatusPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+
+    final socketService = Provider.of<SocketService>(context, listen: false);
+    print('TACO');
+    // socketService.socket.emit(event)
+
     return Scaffold(
       body: Center(
-        child: Text('Hola Mundo'),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text('ServerStatus: ${ socketService.serverStatus }')
+          ]
+        ),
+      ),floatingActionButton: FloatingActionButton(
+      child: Icon( Icons.message ),
+      onPressed: (){
+        //TAREA
+        // emitir: emitir-mensaje
+        // {nombre: 'Flutter', mensaje: 'Hola desde Flutter'}
+        socketService.emit('emitir-mensaje', {
+          'nombre': 'Flutter',
+          'mensaje':'Hola desde flutter'
+        });
+      }
       ),
     );
   }
